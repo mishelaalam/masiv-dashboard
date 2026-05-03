@@ -6,7 +6,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-const API = import.meta.env.VITE_API_URL || "/api";
+const API = "https://masiv-dashboard-production.up.railway.app/api";
 
 export const useStore = create((set, get) => ({
   // ── Data ──────────────────────────────────────────────────────────────────
