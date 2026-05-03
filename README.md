@@ -212,7 +212,3 @@ The seed dataset covers the Beltline / Downtown Core / East Village area bounded
 - **Address search**: Pure client-side substring match against the loaded building dataset — instant results with no backend involvement.
 
 ---
-
-## License
-
-MIT
