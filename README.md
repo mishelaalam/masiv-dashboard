@@ -218,16 +218,16 @@ The seed dataset covers the Beltline / Downtown Core / East Village area bounded
 The LLM never sees the building dataset. It only receives the user's text query and returns a small JSON filter object like `{"height_min": 100}`. The actual filtering runs in the browser via `applyFilter()` in `useStore.js`. This means filter results are instant (no network round trip), the building data stays private, and the LLM API costs stay near zero since we're only sending a short text query each time.
 
 ### Why Zustand over Redux?
-Zustand is a lightweight state manager that doesn't require boilerplate. All shared state — buildings, active filter, selected building, user, projects, fabrication mode — lives in one `useStore.js` file. Any component can read or update state with one line. For a project this size Redux would be overkill.
+Zustand is a lightweight state manager that doesn't require boilerplate. All shared state, buildings, active filter, selected building, user, projects, fabrication mode, lives in one `useStore.js` file. Any component can read or update state with one line. For a project this size Redux would be overkill.
 
 ### Why seed data instead of live API?
 The app tries OpenStreetMap's Overpass API first on startup. If it's unavailable or slow, it falls back to ~500 pre-generated Calgary buildings with realistic coordinates, heights, zoning codes, and assessed values. This means the app always works, even without internet access or if OSM rate-limits the request.
 
 ### Why Flask over FastAPI or Django?
-Flask is minimal and explicit — you can read the entire backend in under 300 lines. For an internship project that needs to be reviewed and understood quickly, that matters more than performance. FastAPI would also work but adds complexity with async and type annotations that aren't needed here.
+Flask is minimal and explicit, you can read the entire backend in under 300 lines. For a small project that needs to be reviewed and understood quickly, that matters more than performance. FastAPI would also work but adds complexity with async and type annotations that aren't needed here.
 
 ### Why separate backend and frontend?
-Keeping Flask and React separate means they can be deployed independently (Railway for backend, Netlify for frontend) and scaled separately. It also mirrors how real production systems are structured — the frontend is just a client that talks to an API.
+Keeping Flask and React separate means they can be deployed independently (Railway for backend, Netlify for frontend) and scaled separately. It also mirrors how real production systems are structured, the frontend is just a client that talks to an API.
 
 ### Fabrication toolpath approach
 Rather than a physically accurate toolpath, the fabrication mode fits a `CatmullRomCurve3` through all footprint vertices of selected buildings. A sphere mesh moves along `curve.getPoint(t)` inside `useFrame()`, which runs every animation frame. The curve smooths sharp corners between buildings so the animation looks fluid rather than jerky.
